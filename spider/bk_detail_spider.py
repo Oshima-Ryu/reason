@@ -3,6 +3,7 @@ import time
 
 import requests
 
+from spider.bk_daily_untils import save_daily_data
 from spider.bk_list_spider import get_bk_list
 
 
@@ -63,7 +64,8 @@ def spider_start():
     for bk_info in bk_list:
         print(bk_info)
         bk_kline_data = get_bk_kline_data(bk_info["code"])
-        save_data_json(bk_kline_data, bk_info["name"])
+        # save_data_json(bk_kline_data, bk_info["name"])
+        save_daily_data(bk_info, bk_kline_data)
         time.sleep(10)
     pass
 
