@@ -2,3 +2,4 @@
 /.idea/
 /.git/
 /spider/data/
+/spider/__pycache__/
