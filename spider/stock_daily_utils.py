@@ -46,6 +46,7 @@ def update_daily_data(stock_dict_list):
 
     for stock_dict in stock_dict_list:
         try:
+            # print(stock_dict)
             stock_code = stock_dict["ts_code"][:6]
             date_key = stock_dict["trade_date"]
             stock_info = json.dumps(stock_dict, ensure_ascii=False)

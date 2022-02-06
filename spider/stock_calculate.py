@@ -23,6 +23,8 @@ def save_cal_data(stock_calculate_pd):
     for i, r in stock_calculate_pd.iterrows():
         stock_dict = r.to_dict()
         stock_dict_list.append(stock_dict)
+    if len(stock_dict_list) == 0:
+        return
     update_daily_data(stock_dict_list)
 
 
@@ -31,7 +33,11 @@ def calculate_and_save_stock_data(all_ts_code_list):
     for ts_code in all_ts_code_list:
         print(i, ts_code, len(all_ts_code_list))
         i = i+1
+        if i <= 4657:
+            continue
         stock_daily_data = get_stock_daily_data(ts_code[:6])
+        if len(stock_daily_data) == 0:
+            continue
         stock_calculate_pd = do_calculate(stock_daily_data)
         save_cal_data(stock_calculate_pd)
 
