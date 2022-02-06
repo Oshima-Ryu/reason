@@ -67,7 +67,6 @@ def spider_start():
         # save_data_json(bk_kline_data, bk_info["name"])
         save_daily_data(bk_info, bk_kline_data)
         time.sleep(10)
-    pass
 
 
 if __name__ == "__main__":
