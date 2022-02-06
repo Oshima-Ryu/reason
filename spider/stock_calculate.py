@@ -1,7 +1,7 @@
 import json
 
 from spider.stock_daily_utils import get_stock_daily_data, save_daily_data, update_daily_data
-from spider.stock_kline_spiderV2 import get_all_code
+from spider.stock_kline_spider import get_all_code
 import pandas as pd
 
 
@@ -33,8 +33,6 @@ def calculate_and_save_stock_data(all_ts_code_list):
     for ts_code in all_ts_code_list:
         print(i, ts_code, len(all_ts_code_list))
         i = i+1
-        if i <= 4657:
-            continue
         stock_daily_data = get_stock_daily_data(ts_code[:6])
         if len(stock_daily_data) == 0:
             continue
