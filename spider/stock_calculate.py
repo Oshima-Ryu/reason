@@ -1,6 +1,7 @@
 import json
 
-from spider.stock_daily_utils import get_stock_daily_data, save_daily_data, update_daily_data
+from spider.config import START_DATE
+from spider.stock_daily_utils import update_daily_data, get_stock_daily_data_reset_60_days
 from spider.stock_kline_spider import get_all_code
 import pandas as pd
 
@@ -22,6 +23,8 @@ def save_cal_data(stock_calculate_pd):
     stock_dict_list = []
     for i, r in stock_calculate_pd.iterrows():
         stock_dict = r.to_dict()
+        if stock_dict["trade_date"] < START_DATE:
+            continue
         stock_dict_list.append(stock_dict)
     if len(stock_dict_list) == 0:
         return
@@ -33,17 +36,18 @@ def calculate_and_save_stock_data(all_ts_code_list):
     for ts_code in all_ts_code_list:
         print(i, ts_code, len(all_ts_code_list))
         i = i+1
-        stock_daily_data = get_stock_daily_data(ts_code[:6])
+        stock_daily_data = get_stock_daily_data_reset_60_days(ts_code[:6])
         if len(stock_daily_data) == 0:
             continue
         stock_calculate_pd = do_calculate(stock_daily_data)
         save_cal_data(stock_calculate_pd)
 
 
-def spider_start():
+def calculate_start():
+    print("stock calculate start")
     all_code_list = get_all_code()
     calculate_and_save_stock_data(all_code_list)
 
 
 if __name__ == "__main__":
-    spider_start()
+    calculate_start()

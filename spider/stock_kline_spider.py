@@ -2,9 +2,10 @@ import time
 
 import tushare as ts
 
+from spider.config import TS_TOKEN, START_DATE
 from spider.stock_daily_utils import save_daily_data
 
-ts.set_token('3ae5f1009c3a59e9a189fa028922aeb0e3a6285e168608a9aaefe2df')
+ts.set_token(TS_TOKEN)
 pro = ts.pro_api()
 
 
@@ -15,7 +16,8 @@ def get_all_code():
 
 #获取指定日期的所有股票数据
 def get_all_stock_data_by_date(date):
-    df = pro.daily(trade_date='20220110')
+    df = pro.daily(trade_date=date)
+    return df
 
 
 def save_stock_data(stock_data):
@@ -40,10 +42,17 @@ def get_and_save_stock_his_data(stock_code_list):
             time.sleep(20)
 
 
-def spider_start():
+#获取历史数据
+def spider_start_all_his_data():
     all_code_list = get_all_code()
     get_and_save_stock_his_data(all_code_list)
 
 
+#获取指定日期数据
+def spider_start_special_date():
+    df = get_all_stock_data_by_date(START_DATE)
+    save_stock_data(df)
+
+
 if __name__ == "__main__":
-    spider_start()
+    spider_start_special_date()

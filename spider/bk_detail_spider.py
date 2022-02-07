@@ -14,6 +14,14 @@ from spider.bk_list_spider import get_bk_list
 # http://1.push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery35105044628275367318_1643971382126&secid=90.BK1032&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=101&fqt=1&beg=0&end=20500101&smplmt=460&lmt=1000000&_=1643971382127
 # 周线
 # http://98.push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery35105193667456293645_1644046353261&secid=90.BK1032&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=102&fqt=1&beg=0&end=20500101&smplmt=460&lmt=1000000&_=1644046353268
+from spider.config import START_DATE
+
+
+def convert_date_str(date_key):
+    timeArray = time.strptime(date_key, "%Y%m%d")
+    otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
+    return otherStyleTime
+
 
 def save_data_json(data_dict, name):
     file_name = name
@@ -36,6 +44,8 @@ def extract_data(data_text):
     for item in kline_json:
         # 日期，开盘，收盘，最高，最低，成交量，成交额，振幅（%），涨跌幅（%），涨跌额，换手率（%）
         temp_list = item.split(",")
+        if temp_list[0] < convert_date_str(START_DATE):
+            continue
         kline = {}
         kline["date"] = temp_list[0]  # 日期
         kline["opening_price"] = temp_list[1]  # 开盘价
@@ -66,7 +76,7 @@ def spider_start():
         bk_kline_data = get_bk_kline_data(bk_info["code"])
         # save_data_json(bk_kline_data, bk_info["name"])
         save_daily_data(bk_info, bk_kline_data)
-        time.sleep(10)
+        time.sleep(5)
 
 
 if __name__ == "__main__":

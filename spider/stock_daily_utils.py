@@ -9,12 +9,30 @@ def dict_factory(cursor, row):
     return d
 
 
-def get_stock_daily_data(stock_code):
+def get_stock_daily_data_reset_60_days(stock_code):
     conn = sqlite3.connect("bk.db")
     conn.row_factory = dict_factory
     c = conn.cursor()
-    sql = "select * from stock_daily_info where stock_code = '" + stock_code + "' order by date_key desc"
+    sql = "select * from stock_daily_info where stock_code = '" + stock_code + "' order by date_key desc limit 60"
     res = c.execute(sql).fetchall()
+    return res
+
+
+def get_stock_daily_data_with_date(stock_code, date_key):
+    conn = sqlite3.connect("bk.db")
+    conn.row_factory = dict_factory
+    c = conn.cursor()
+    sql = "select * from stock_daily_info where stock_code = '" + stock_code + "' and date_key = '" + date_key + "'"
+    res = c.execute(sql).fetchall()
+    return res
+
+
+def batch_get_stock_daily_data(stock_code_list, date_key):
+    conn = sqlite3.connect("bk.db")
+    conn.row_factory = dict_factory
+    c = conn.cursor()
+    sql = "select * from stock_daily_info where stock_code in({seq}) and date_key ={date_key}".format(seq=','.join(['?']*len(stock_code_list)), date_key = date_key)
+    res = c.execute(sql, stock_code_list).fetchall()
     return res
 
 

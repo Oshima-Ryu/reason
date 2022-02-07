@@ -9,6 +9,22 @@ def dict_factory(cursor, row):
     return d
 
 
+def convert_date_str(date_key):
+    timeArray = time.strptime(date_key, "%Y%m%d")
+    otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
+    return otherStyleTime
+
+
+def get_bk_daily_info_by_date(date):
+    date_key = convert_date_str(date)
+    conn = sqlite3.connect("bk.db")
+    conn.row_factory = dict_factory
+    c = conn.cursor()
+    sql = "select * from bk_daily_info where date_key = '" + date_key + "'"
+    res = c.execute(sql).fetchall()
+    return res
+
+
 def get_all_lines(bk_code):
     conn = sqlite3.connect("bk.db")
     conn.row_factory = dict_factory
@@ -37,5 +53,25 @@ def save_daily_data(bk, bk_daily_list):
             print("insert exception")
     conn.commit()
     conn.close()
+
+
+def save_bk_cal(bk_cal_data_list):
+    conn = sqlite3.connect("bk.db")
+    c = conn.cursor()
+
+    for bk_cal_data in bk_cal_data_list:
+        try:
+            # print(stock_dict)
+            bk_code = bk_cal_data["bk_code"]
+            date_key = bk_cal_data["date_key"]
+            bk_cal = json.dumps(bk_cal_data, ensure_ascii=False)
+            c.execute("update bk_daily_info set bk_cal = ? where bk_code = ? and date_key = ?", (
+                bk_cal, bk_code, date_key
+            ))
+        except:
+            print("update exception")
+    conn.commit()
+    conn.close()
+
 
 
