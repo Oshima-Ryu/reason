@@ -52,8 +52,9 @@ def save_daily_data(stock_dict_list):
                                         values(?,?,?,?,?)", (
                 stock_code, stock_ts_code, date_key, stock_info, add_time
             ))
-        except :
+        except Exception as e:
             print("insert exception")
+            print(e)
     conn.commit()
     conn.close()
 

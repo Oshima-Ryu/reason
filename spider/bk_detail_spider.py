@@ -12,6 +12,7 @@ from spider.bk_list_spider import get_bk_list
 
 # 日线
 # http://1.push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery35105044628275367318_1643971382126&secid=90.BK1032&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=101&fqt=1&beg=0&end=20500101&smplmt=460&lmt=1000000&_=1643971382127
+# http://4.push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery35107091239938558553_1644332922803&secid=90.BK0475&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=101&fqt=1&end=20500101&lmt=120&_=1644332922808
 # 周线
 # http://98.push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery35105193667456293645_1644046353261&secid=90.BK1032&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=102&fqt=1&beg=0&end=20500101&smplmt=460&lmt=1000000&_=1644046353268
 from spider.config import START_DATE

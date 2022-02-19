@@ -50,6 +50,7 @@ def spider_start_all_his_data():
 
 #获取指定日期数据
 def spider_start_special_date():
+    print("stock spider start, date=", START_DATE)
     df = get_all_stock_data_by_date(START_DATE)
     save_stock_data(df)
 

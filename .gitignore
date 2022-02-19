@@ -6,3 +6,6 @@
 /data_persistence/__pycache__/
 /spider/bk.db
 /spider/config.py
+
+/page/__pycache__/
+/page/render.html
