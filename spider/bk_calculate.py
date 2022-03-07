@@ -171,10 +171,11 @@ def do_calculate_line_feature(bk_data_list):
     bk_feature_list = []
     for item in bk_data_list:
         if item.get("bk_cal") is None:
-            continue
+            bk_data = {"bk_code": item["bk_code"], "date_key": item["date_key"]}
+        else:
+            bk_data = json.loads(item["bk_cal"])
         if item.get("bk_info") is None:
             continue
-        bk_data = json.loads(item["bk_cal"])
         bk_data['close'] = float(json.loads(item["bk_info"])['closing_price'])
         bk_feature_list.append(bk_data)
     bk_info_df = pd.DataFrame(bk_feature_list).sort_values("date_key")
